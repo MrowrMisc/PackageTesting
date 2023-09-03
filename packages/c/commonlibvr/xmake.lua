@@ -23,6 +23,7 @@ package("commonlibvr")
 
         -- Clone main repo manually.
         os.vrun("git clone https://github.com/alandtse/CommonLibVR.git")
+        os.cd("CommonLibVR")
         -- os.vrun("git clone https://github.com/alandtse/CommonLibVR.git " .. workdir)
 
         -- Change directory to the workdir.
@@ -43,7 +44,7 @@ package("commonlibvr")
         --
         -- os.cd(current_dir)
 
-        os.cp(path.join(package:scriptdir(), "port", "xmake.lua"), "xmake.lua")
+        os.cp(path.join(package:scriptdir(), "port", "xmake.lua"), "../xmake.lua")
         import("package.tools.xmake").install(package, {})
 
         -- Evil. Let's inject the 'SKSEPluginLoad' macro for compatibility with NG
