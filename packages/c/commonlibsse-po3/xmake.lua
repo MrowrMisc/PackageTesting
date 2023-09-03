@@ -11,7 +11,7 @@ package("commonlibsse-po3")
     -- add_configs("skyrim_vr", {description = "Enable runtime support for Skyrim VR", default = true, type = "boolean"})
     -- add_configs("skse_xbyak", {description = "Enable trampoline support for Xbyak", default = false, type = "boolean"})
 
-    add_deps("fmt", "rsm-binary-io", "vcpkg::boost-stl-interfaces")
+    add_deps("fmt", "rsm-binary-io", "vcpkg:boost-stl-interfaces")
     add_deps("spdlog", { configs = { header_only = false, fmt_external = true } })
 
     add_syslinks("version", "user32", "shell32", "ole32", "advapi32")
