@@ -43,8 +43,10 @@ package("commonlibvr")
 
         --
         -- os.cd(current_dir)
+        os.cd("..")
+        os.cp("CommonLibVR/*", ".")
 
-        os.cp(path.join(package:scriptdir(), "port", "xmake.lua"), "../xmake.lua")
+        os.cp(path.join(package:scriptdir(), "port", "xmake.lua"), "xmake.lua")
         import("package.tools.xmake").install(package, {})
 
         -- Evil. Let's inject the 'SKSEPluginLoad' macro for compatibility with NG
