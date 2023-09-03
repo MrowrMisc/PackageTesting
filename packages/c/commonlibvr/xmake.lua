@@ -49,7 +49,7 @@ package("commonlibvr")
         -- Evil. Let's make sure that SFTypes is included super early, so replace the #pragma one with the include
         local pch_path = "include/SKSE/Impl/PCH.h"
         local content = io.readfile(pch_path)
-        content = content:gsub("#pragma once", "#pragma once\n\n// SFTypes first:\n#include \"../SFTypes.h\"\n")
+        content = content:gsub("#pragma once", "#pragma once\n\n// SFTypes first:\n#include \"RE/S/SFTypes.h\"\n")
         io.writefile(pch_path, content)
 
         os.cp(path.join(package:scriptdir(), "port", "xmake.lua"), "xmake.lua")
