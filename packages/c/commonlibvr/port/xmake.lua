@@ -31,6 +31,7 @@ target("CommonLibVR")
     add_includedirs("include", { public = true })
     add_includedirs("extern/openvr/headers", { public = true })
     add_headerfiles(
+        "include/csv.h",
         "include/(RE/**.h)",
         "include/(REL/**.h)",
         "include/(SKSE/**.h)",
