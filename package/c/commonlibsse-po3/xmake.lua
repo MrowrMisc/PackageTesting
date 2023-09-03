@@ -1,4 +1,4 @@
-package("commonlibsse-ng")
+package("commonlibsse-po3")
     set_homepage("https://github.com/powerof3/CommonLibSSE")
     set_description("A reverse engineered library for Skyrim Special Edition.")
     set_license("MIT")
