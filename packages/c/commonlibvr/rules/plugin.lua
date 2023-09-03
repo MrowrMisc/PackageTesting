@@ -1,6 +1,6 @@
 -- Usage:
 --
--- add_rules("@commonlibsse-po3/plugin", {
+-- add_rules("@commonlibvr/plugin", {
 --     name = "Plugin name",
 --     author = "Author name",
 --     description = "Plugin description",
@@ -29,7 +29,7 @@ rule("plugin")
         target:add("cxxflags", "cl::/Zc:externConstexpr", "cl::/Zc:hiddenFriend", "cl::/Zc:preprocessor", "cl::/Zc:referenceBinding")
 
         local version = semver.new(target:version() or "0.0.0")
-        local configs = target:extraconf("rules", "@commonlibsse-po3/plugin")
+        local configs = target:extraconf("rules", "@commonlibvr/plugin")
         local config_dir = path.join(target:autogendir(), "rules", "commonlibsse", "plugin")
 
         local version_file = path.join(config_dir, "version.rc")
