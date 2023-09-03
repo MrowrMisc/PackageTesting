@@ -6,7 +6,7 @@ package("commonlibvr")
     -- The silly thing uses git@github.com SSH path for openvr, why...
     -- add_urls("https://github.com/alandtse/CommonLibVR.git")
 
-    add_deps("fmt", "rsm-binary-io", "vcpkg::boost-stl-interfaces")
+    add_deps("fmt", "rsm-binary-io", "vcpkg::boost-stl-interfaces", "openvr")
     add_deps("spdlog", { configs = { header_only = false, fmt_external = true } })
 
     add_syslinks("version", "user32", "shell32", "ole32", "advapi32")
@@ -38,8 +38,9 @@ package("commonlibvr")
         end
 
         -- Update submodules with modified paths.
-        os.vrun("git submodule sync")
-        os.vrun("git submodule update --init --recursive")
+        -- Nahhhh... we'll use openvr from xmake instead
+        -- os.vrun("git submodule sync")
+        -- os.vrun("git submodule update --init --recursive")
 
         --
         -- os.cd(current_dir)

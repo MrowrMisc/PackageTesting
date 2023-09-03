@@ -11,7 +11,7 @@ add_requires("spdlog", { configs = { header_only = false, fmt_external = true } 
 target("CommonLibVR")
     set_kind("static")
 
-    add_packages("fmt", "spdlog", "rsm-binary-io", "vcpkg::boost-stl-interfaces")
+    add_packages("fmt", "spdlog", "rsm-binary-io", "vcpkg::boost-stl-interfaces", "openvr")
 
     add_defines("SKYRIMVR")
     add_defines("BOOST_STL_INTERFACES_DISABLE_CONCEPTS")
