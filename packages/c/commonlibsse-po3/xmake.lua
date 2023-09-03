@@ -22,7 +22,7 @@ package("commonlibsse-po3")
         -- Evil. Let's inject the 'SKSEPluginLoad' macro for compatibility with NG
         local skse_header_path = path.join(package:installdir(), "include/SKSE/SKSE.h")
         local content = io.readfile(skse_header_path)
-        content = content .. "\n#define SKSEPluginLoad extern \"C\" __declspec(dllexport) bool"
+        content = content .. "\n#define SKSEPluginLoad extern \"C\" __declspec(dllexport) bool SKSEPlugin_Load"
         io.writefile(skse_header_path, content)
     end)
 
