@@ -3,8 +3,7 @@ package("commonlibvr")
     set_description("A reverse engineered library for Skyrim Special Edition.")
     set_license("MIT")
 
-    add_urls("https://github.com/alandtse/CommonLibVR/archive/$(version).zip",
-             "https://github.com/alandtse/CommonLibVR.git")
+    add_urls("https://github.com/alandtse/CommonLibVR.git")
 
     add_deps("fmt", "rsm-binary-io", "vcpkg::boost-stl-interfaces")
     add_deps("spdlog", { configs = { header_only = false, fmt_external = true } })
