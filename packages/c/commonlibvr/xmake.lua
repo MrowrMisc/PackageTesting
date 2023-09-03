@@ -12,7 +12,7 @@ package("commonlibvr")
     add_syslinks("version", "user32", "shell32", "ole32", "advapi32")
 
     on_load("windows|x64", function(package)
-        package:add("defines", "SKYRIMVR=1")
+        package:add("defines", "SKYRIMVR", "_CRT_SECURE_NO_WARNINGS")
     end)
 
     on_install("windows|x64", function(package)

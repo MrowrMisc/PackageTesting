@@ -19,7 +19,7 @@ rule("plugin")
         import("core.project.depend")
         import("core.project.project")
 
-        target:add("defines", "SKYRIMVR=1", "BOOST_STL_INTERFACES_DISABLE_CONCEPTS")
+        target:add("defines", "SKYRIMVR", "BOOST_STL_INTERFACES_DISABLE_CONCEPTS")
 
         target:set("kind", "shared")
         target:set("arch", "x64")
