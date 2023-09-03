@@ -14,13 +14,15 @@
 rule("plugin")
     add_deps("win.sdk.resource")
 
-    add_defines("SKYRIM_SUPPORT_AE=1")
-    add_defines("BOOST_STL_INTERFACES_DISABLE_CONCEPTS")
+    -- add_defines("SKYRIM_SUPPORT_AE=1")
+    -- add_defines("BOOST_STL_INTERFACES_DISABLE_CONCEPTS")
 
     on_config(function(target)
         import("core.base.semver")
         import("core.project.depend")
         import("core.project.project")
+
+        target:add("defines", "SKYRIM_SUPPORT_AE=1", "BOOST_STL_INTERFACES_DISABLE_CONCEPTS")
 
         target:set("kind", "shared")
         target:set("arch", "x64")
