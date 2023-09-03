@@ -42,19 +42,19 @@ set_optimize("faster")
 -- option_end()
 
 -- add packages
-add_requires("fmt", "rapidcsv")
+add_requires("fmt", "rsm-binary-io", "vcpkg::boost-stl-interfaces")
 add_requires("spdlog", { configs = { header_only = false, fmt_external = true } })
 
-if has_config("skse_xbyak") then
-    add_requires("xbyak")
-end
+-- if has_config("skse_xbyak") then
+--     add_requires("xbyak")
+-- end
 
 -- targets
 target("CommonLibSSE")
     set_kind("static")
 
     -- add packages
-    add_packages("fmt", "spdlog", "rapidcsv")
+    add_packages("fmt", "spdlog", "rsm-binary-io", "vcpkg::boost-stl-interfaces")
 
     -- if has_config("skse_xbyak") then
     --     add_packages("xbyak")
