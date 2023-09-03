@@ -63,6 +63,7 @@ target("CommonLibSSE")
     -- add options
     -- add_options("skyrim_se", "skyrim_ae", "skyrim_vr", "skse_xbyak")
     add_defines("SKYRIM_SUPPORT_AE=1")
+    add_defines("BOOST_STL_INTERFACES_DISABLE_CONCEPTS")
 
     -- add system links
     add_syslinks("version", "user32", "shell32", "ole32", "advapi32")
