@@ -5,6 +5,10 @@ add_rules("mode.debug", "mode.release")
 set_warnings("allextra", "error")
 set_optimize("faster")
 
+-- openvr 1.0.10
+-- https://github.com/ValveSoftware/openvr/releases/tag/v1.0.10
+-- add_requires("openvr", "1.0.10")
+
 add_requires("fmt", "rsm-binary-io", "vcpkg::boost-stl-interfaces")
 add_requires("spdlog", { configs = { header_only = false, fmt_external = true } })
 
@@ -25,10 +29,12 @@ target("CommonLibVR")
 
     -- add header files
     add_includedirs("include", { public = true })
+    add_includedirs("extern/openvr/headers", { public = true })
     add_headerfiles(
         "include/(RE/**.h)",
         "include/(REL/**.h)",
-        "include/(SKSE/**.h)"
+        "include/(SKSE/**.h)",
+        "extern/openvr/headers/(**.h)"
     )
 
     -- set precompiled header

@@ -6,7 +6,10 @@ package("commonlibvr")
     -- The silly thing uses git@github.com SSH path for openvr, why...
     -- add_urls("https://github.com/alandtse/CommonLibVR.git")
 
-    add_deps("fmt", "rsm-binary-io", "vcpkg::boost-stl-interfaces", "openvr")
+    -- openvr 1.0.10
+    -- https://github.com/ValveSoftware/openvr/releases/tag/v1.0.10
+
+    add_deps("fmt", "rsm-binary-io", "vcpkg::boost-stl-interfaces")
     add_deps("spdlog", { configs = { header_only = false, fmt_external = true } })
 
     add_syslinks("version", "user32", "shell32", "ole32", "advapi32")
