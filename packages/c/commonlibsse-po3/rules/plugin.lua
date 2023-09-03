@@ -70,7 +70,7 @@ rule("plugin")
             end
         end, { dependfile = target:dependfile(version_file), files = project.allfiles()})
 
-        local plugin_file = path.join(config_dir, "SKSEPluginVersion.h")
+        local plugin_file = path.join(config_dir, "SKSEPlugin.h")
         depend.on_changed(function()
             local file = io.open(plugin_file, "w")
             if file then
