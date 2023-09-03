@@ -19,13 +19,14 @@ package("commonlibvr")
         -- local current_dir = os.curdir()
         --
 
-        local workdir = path.join(os.tmpdir(), "commonlibvr_clone")
+        -- local workdir = path.join(os.tmpdir(), "commonlibvr_clone")
 
         -- Clone main repo manually.
-        os.vrun("git clone https://github.com/alandtse/CommonLibVR.git " .. workdir)
+        os.vrun("git clone https://github.com/alandtse/CommonLibVR.git")
+        -- os.vrun("git clone https://github.com/alandtse/CommonLibVR.git " .. workdir)
 
         -- Change directory to the workdir.
-        os.cd(workdir)
+        -- os.cd(workdir)
 
         -- Replace SSH paths with HTTPS in .gitmodules if they exist.
         local gitmodules_path = ".gitmodules"
