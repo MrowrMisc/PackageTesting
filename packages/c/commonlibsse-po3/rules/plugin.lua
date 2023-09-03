@@ -70,7 +70,7 @@ rule("plugin")
             end
         end, { dependfile = target:dependfile(version_file), files = project.allfiles()})
 
-        local plugin_file = path.join(config_dir, "SKSEPlugin.h")
+        local plugin_file = path.join(config_dir, "plugin.cpp")
         depend.on_changed(function()
             local file = io.open(plugin_file, "w")
             if file then
@@ -96,15 +96,16 @@ rule("plugin")
                 -- file:print("    .StructCompatibility = SKSE::StructCompatibility::%s,", struct_compat)
                 -- file:print("    .RuntimeCompatibility = SKSE::VersionIndependence::%s", runtime_compat)
                 -- file:print(")")
-                file:print("")
-                file:print("")
+
                 file:print("#pragma once")
                 file:print("")
                 file:print("#include <SKSE/SKSE.h>")
                 file:print("#include <REL/Relocation.h>\n")
                 file:print("")
                 file:print("#include <string_view>")
+
                 file:print("")
+
                 file:print("namespace Plugin")
                 file:print("{")
                 file:print("	using namespace std::literals;")
@@ -120,6 +121,33 @@ rule("plugin")
                 file:print("")
                 file:print("	inline constexpr auto NAME = \"" .. target:name() .. "\"sv;")
                 file:print("}")
+
+                file:print("")
+
+                file:print("extern \"C\" __declspec(dllexport) constinit auto SKSEPlugin_Version = []() {")
+                file:print("    SKSE::PluginVersionData v;")
+                file:print("    v.PluginVersion(Plugin::VERSION);")
+                file:print("    v.PluginName(Plugin::NAME);")
+                file:print("    v.UsesAddressLibrary();")
+                file:print("    v.UsesUpdatedStructs();")
+                file:print("    // v.CompatibleVersions({SKSE::RUNTIME_1_6_659});")
+                file:print("    // v.HasNoStructUse(true);")
+                file:print("    return v;")
+                file:print("}();")
+                
+                file:print("")
+
+                file:print("extern \"C\" __declspec(dllexport) bool SKSEAPI")
+                file:print("    SKSEPlugin_Query(const SKSE::QueryInterface* a_skse, SKSE::PluginInfo* a_info) {")
+                file:print("    a_info->infoVersion = SKSE::PluginInfo::kVersion;")
+                file:print("    a_info->name = Plugin::NAME.data();")
+                file:print("    a_info->version = Plugin::VERSION.pack();")
+                file:print("    if (a_skse->IsEditor()) return false;")
+                file:print("    return true;")
+                file:print("}")
+
+                file:print("")
+
                 file:close()
             end
         end, { dependfile = target:dependfile(plugin_file), files = project.allfiles()})
