@@ -14,6 +14,9 @@
 rule("plugin")
     add_deps("win.sdk.resource")
 
+    add_defines("SKYRIM_SUPPORT_AE=1")
+    add_defines("BOOST_STL_INTERFACES_DISABLE_CONCEPTS")
+
     on_config(function(target)
         import("core.base.semver")
         import("core.project.depend")
@@ -65,7 +68,7 @@ rule("plugin")
             end
         end, { dependfile = target:dependfile(version_file), files = project.allfiles()})
 
-        local plugin_file = path.join(config_dir, "plugin.cpp")
+        local plugin_file = path.join(config_dir, "SKSEPlugin.h")
         depend.on_changed(function()
             local file = io.open(plugin_file, "w")
             if file then
