@@ -125,19 +125,6 @@ rule("plugin")
 
                 file:print("")
 
-                file:print("extern \"C\" __declspec(dllexport) constinit auto SKSEPlugin_Version = []() {")
-                file:print("    SKSE::PluginVersionData v;")
-                file:print("    v.PluginVersion(Plugin::VERSION);")
-                file:print("    v.PluginName(Plugin::NAME);")
-                file:print("    v.UsesAddressLibrary();")
-                file:print("    v.UsesUpdatedStructs();")
-                file:print("    // v.CompatibleVersions({SKSE::RUNTIME_1_6_659});")
-                file:print("    // v.HasNoStructUse(true);")
-                file:print("    return v;")
-                file:print("}();")
-                
-                file:print("")
-
                 file:print("extern \"C\" __declspec(dllexport) bool SKSEAPI")
                 file:print("    SKSEPlugin_Query(const SKSE::QueryInterface* a_skse, SKSE::PluginInfo* a_info) {")
                 file:print("    a_info->infoVersion = SKSE::PluginInfo::kVersion;")
