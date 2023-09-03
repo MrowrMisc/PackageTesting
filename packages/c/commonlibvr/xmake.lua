@@ -16,7 +16,7 @@ package("commonlibvr")
     end)
 
     on_install("windows|x64", function(package)
-        local current_dir = os.curdir()
+        -- local current_dir = os.curdir()
         --
 
         local workdir = path.join(os.tmpdir(), "commonlibvr_clone")
@@ -40,7 +40,7 @@ package("commonlibvr")
         os.vrun("git submodule update --init --recursive")
 
         --
-        os.cd(current_dir)
+        -- os.cd(current_dir)
 
         os.cp(path.join(package:scriptdir(), "port", "xmake.lua"), "xmake.lua")
         import("package.tools.xmake").install(package, {})
