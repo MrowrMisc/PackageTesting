@@ -9,6 +9,7 @@ rule("plugin")
         local plugin_author = config.author or ""
         local plugin_email = config.email or ""
         local plugin_output_folder = config.output_folder
+        local plugin_output_folders = config.output_folders
 
         if get_config("depends_on_skyrim_commonlib_ae") then
             target:add("packages", "skyrim-commonlib-ae")
@@ -18,7 +19,8 @@ rule("plugin")
                 description = plugin_description,
                 author = plugin_author,
                 email = plugin_email,
-                output_folder = plugin_output_folder
+                output_folder = plugin_output_folder,
+                output_folders = plugin_output_folders
             })
         end
 
@@ -30,7 +32,8 @@ rule("plugin")
                 description = plugin_description,
                 author = plugin_author,
                 email = plugin_email,
-                output_folder = plugin_output_folder
+                output_folder = plugin_output_folder,
+                output_folders = plugin_output_folders
             })
         end
 
@@ -42,7 +45,8 @@ rule("plugin")
                 description = plugin_description,
                 author = plugin_author,
                 email = plugin_email,
-                output_folder = plugin_output_folder
+                output_folder = plugin_output_folder,
+                output_folders = plugin_output_folders
             })
         end
 
@@ -54,7 +58,8 @@ rule("plugin")
                 description = plugin_description,
                 author = plugin_author,
                 email = plugin_email,
-                output_folder = plugin_output_folder
+                output_folder = plugin_output_folder,
+                output_folders = plugin_output_folders
             })
         end
     end)

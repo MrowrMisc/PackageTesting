@@ -8,28 +8,32 @@ add_requires("fmt", "rsm-binary-io", "vcpkg::boost-stl-interfaces")
 add_requires("spdlog", { configs = { header_only = false, fmt_external = true } })
 -- TODO: add xbyak when configured (add config option)
 
-target("SkyrimCommonLibSE")
+target("SkyrimCommonLibVR")
     set_kind("static")
 
-    -- add packages
     add_packages("fmt", "spdlog", "rsm-binary-io", "vcpkg::boost-stl-interfaces")
-    -- TODO: add xbyak when configured (add config option)
 
     add_defines(
+        "SKYRIMVR",
         "BOOST_STL_INTERFACES_DISABLE_CONCEPTS",
         "WIN32_LEAN_AND_MEAN", "NOMINMAX",
-        "UNICODE", "_UNICODE"
+        "UNICODE", "_UNICODE",
+        "_CRT_SECURE_NO_WARNINGS"
     )
 
     add_syslinks("version", "user32", "shell32", "ole32", "advapi32")
 
     add_files("src/**.cpp")
 
+    -- Don't forget openvr headers and csv.h
     add_includedirs("include", { public = true })
+    add_includedirs("extern/openvr/headers", { public = true })
     add_headerfiles(
+        "include/csv.h",
         "include/(RE/**.h)",
         "include/(REL/**.h)",
-        "include/(SKSE/**.h)"
+        "include/(SKSE/**.h)",
+        "extern/openvr/headers/(**.h)"
     )
 
     set_pcxxheader("include/SKSE/Impl/PCH.h")
