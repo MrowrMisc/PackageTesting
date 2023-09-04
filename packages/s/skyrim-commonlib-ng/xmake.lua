@@ -14,6 +14,8 @@ package("skyrim-commonlib-ng")
     add_deps("fmt", "rapidcsv")
     add_deps("spdlog", { configs = { header_only = false, fmt_external = true } })
 
+    add_syslinks("version", "user32", "shell32", "ole32", "advapi32")
+
     on_load("windows|x64", function(package)
         if package:config("se") then
             package:add("defines", "ENABLE_SKYRIM_SE=1")
