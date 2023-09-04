@@ -17,7 +17,7 @@ rule("plugin")
 
         local config = target:extraconf("rules", "@skyrim-commonlib-se/plugin")
 
-        if not config.add_package == false then
+        if config.add_package ~= false then
             target:add("packages", "skyrim-commonlib-se")
         end
 

@@ -21,7 +21,7 @@ rule("plugin")
 
         local config = target:extraconf("rules", "@skyrim-commonlib-vr/plugin")
 
-        if not config.add_package == false then
+        if config.add_package ~= false then
             target:add("packages", "skyrim-commonlib-vr")
         end
 
