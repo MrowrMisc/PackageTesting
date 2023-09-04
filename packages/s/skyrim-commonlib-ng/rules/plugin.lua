@@ -12,7 +12,7 @@ rule("plugin")
         target:set("kind", "shared")
         target:set("arch", "x64")
 
-        local config = target:extraconf("rules", "@commonlibsse-ng/plugin")
+        local config = target:extraconf("rules", "@skyrim-commonlib-ng/plugin")
 
         if config.add_package ~= false then
             target:add("packages", "skyrim-commonlib-ng")
