@@ -16,12 +16,12 @@ rule("plugin")
         target:set("kind", "shared")
         target:set("arch", "x64")
 
-        local configs = target:extraconf("rules", "@skyrim-commonlib-ae/plugin")
+        local config = target:extraconf("rules", "@skyrim-commonlib-ae/plugin")
 
-        local version = semver.new(configs.version or target:version() or "0.0.0")
+        local version = semver.new(config.version or target:version() or "0.0.0")
         local version_string = string.format("%s.%s.%s", version:major(), version:minor(), version:patch())
 
-        local product_version = semver.new(configs.product_version or project.version() or configs.version or target:version() or "0.0.0")
+        local product_version = semver.new(config.product_version or project.version() or config.version or target:version() or "0.0.0")
         local product_version_string = string.format("%s.%s.%s", product_version:major(), product_version:minor(), product_version:patch())
 
         local output_files_folder = path.join(target:autogendir(), "rules", "skyrim-commonlib-ae", "plugin")
@@ -48,11 +48,11 @@ rule("plugin")
                 file:print("    BEGIN")
                 file:print("        BLOCK \"040904b0\"")
                 file:print("        BEGIN")
-                file:print("            VALUE \"FileDescription\", \"%s\"", configs.description or "")
+                file:print("            VALUE \"FileDescription\", \"%s\"", config.description or "")
                 file:print("            VALUE \"FileVersion\", \"%s.0\"", version_string)
-                file:print("            VALUE \"InternalName\", \"%s\"", configs.name or target:name())
-                file:print("            VALUE \"LegalCopyright\", \"%s, %s\"", configs.author or "", configs.license or target:license() or "Unknown License")
-                file:print("            VALUE \"ProductName\", \"%s\"", configs.product_name or project.name() or configs.name or target:name())
+                file:print("            VALUE \"InternalName\", \"%s\"", config.name or target:name())
+                file:print("            VALUE \"LegalCopyright\", \"%s, %s\"", config.author or "", config.license or target:license() or "Unknown License")
+                file:print("            VALUE \"ProductName\", \"%s\"", config.product_name or project.name() or config.name or target:name())
                 file:print("            VALUE \"ProductVersion\", \"%s.0\"", product_version_string)
                 file:print("        END")
                 file:print("    END")
@@ -122,7 +122,7 @@ rule("plugin")
     end)
 
     after_build(function(target)
-        local configs = target:extraconf("rules", "@skyrim-commonlib-ae/plugin")
+        local config = target:extraconf("rules", "@skyrim-commonlib-ae/plugin")
 
         local output_folders = config.output_folders or {}
 

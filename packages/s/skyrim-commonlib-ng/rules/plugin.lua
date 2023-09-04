@@ -3,13 +3,13 @@ rule("plugin")
     add_deps("win.sdk.resource")
 
     on_config(function (target)
-        local configs = target:extraconf("rules", "@skyrim-commonlib-ng/plugin")
+        local config = target:extraconf("rules", "@skyrim-commonlib-ng/plugin")
 
         target:add("rules", "@commonlibsse-ng/plugin", {
-            name = configs.name or target:name(),
-            description = configs.description or "",
-            author = configs.author or "",
-            email = configs.email or "",
+            name = config.name or target:name(),
+            description = config.description or "",
+            author = config.author or "",
+            email = config.email or "",
             options = {
                 address_library = true,
                 signature_scanning = false
@@ -18,7 +18,7 @@ rule("plugin")
     end)
 
     after_build(function(target)
-        local configs = target:extraconf("rules", "@skyrim-commonlib-ng/plugin")
+        local config = target:extraconf("rules", "@skyrim-commonlib-ng/plugin")
 
         local output_folders = config.output_folders or {}
 
