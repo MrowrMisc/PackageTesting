@@ -157,4 +157,50 @@ rule("plugin")
                 os.cp(pdb, output_folder)
             end
         end
+        
+        local mods_folders = config.mods_folders or {}
+
+        if config.mods_folder then
+            table.insert(mods_folders, config.mods_folder)
+        end
+
+        local mod_name = config.mod_name or config.name or target:name()
+
+        local mod_files = config.mod_files or {}
+
+        table.insert(mod_files, dll)
+        if os.isfile(pdb) then
+            table.insert(mod_files, pdb)
+        end
+
+        for _, mods_folder in ipairs(mods_folders) do
+            local mod_folder = path.join(mods_folder, mod_name)
+
+            for _, mod_file in ipairs(mod_files) do
+                if os.isfile(mod_file) then
+                    local mod_file_target = path.join(mod_folder, path.filename(mod_file))
+
+                    if mod_file == dll then
+                        mod_file_target = path.join(mod_folder, "SKSE", "Plugins", path.filename(mod_file))
+                    elseif mod_file == pdb then
+                        mod_file_target = path.join(mod_folder, "SKSE", "Plugins", path.filename(mod_file))
+                    end
+
+                    local mod_file_target_dir = path.directory(mod_file_target)
+                    if not os.isdir(mod_file_target_dir) then
+                        os.mkdir(mod_file_target_dir)
+                    end
+
+                    -- Clean up previous files in the output folder
+                    if os.isfile(mod_file_target) then
+                        os.rm(mod_file_target)
+                    end
+
+                    -- Copy new files to output fulder
+                    os.cp(mod_file, mod_file_target_dir)
+                else
+                    print("File not found: " .. mod_file)
+                end
+            end
+        end
     end)
