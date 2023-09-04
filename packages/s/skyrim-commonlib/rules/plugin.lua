@@ -1,6 +1,6 @@
 rule("plugin")
 
-    on_load(function (target)
+    on_config(function (target)
         local config = target:extraconf("rules", "plugin")
 
         local plugin_name = config.name or target:name()

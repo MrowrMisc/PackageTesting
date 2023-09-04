@@ -2,7 +2,7 @@ rule("plugin")
 
     add_deps("win.sdk.resource")
 
-    on_load(function (target)
+    on_config(function (target)
         local configs = target:extraconf("rules", "@skyrim-commonlib-ng/plugin")
 
         target:add("rules", "@commonlibsse-ng/plugin", {
