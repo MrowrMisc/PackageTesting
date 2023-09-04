@@ -6,7 +6,7 @@ rule("plugin")
         local config = target:extraconf("rules", "@skyrim-commonlib-ng/plugin")
 
         if config.add_package ~= false then
-            target:add("packages", "commonlibsse-ng")
+            target:add("packages", "skyrim-commonlib-ng")
         end
 
         target:add("rules", "@commonlibsse-ng/plugin", {
