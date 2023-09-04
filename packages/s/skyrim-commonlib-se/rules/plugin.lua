@@ -7,7 +7,6 @@ rule("plugin")
         import("core.project.project")
 
         target:add("defines",
-            "SKYRIM_SUPPORT_AE=1",
             "BOOST_STL_INTERFACES_DISABLE_CONCEPTS",
             "UNICODE", "_UNICODE"
         )
@@ -15,7 +14,7 @@ rule("plugin")
         target:set("kind", "shared")
         target:set("arch", "x64")
 
-        local configs = target:extraconf("rules", "@skyrim-commonlib-ae/plugin")
+        local configs = target:extraconf("rules", "@skyrim-commonlib-se/plugin")
 
         local version = semver.new(configs.version or target:version() or "0.0.0")
         local version_string = string.format("%s.%s.%s", version:major(), version:minor(), version:patch())
@@ -23,7 +22,7 @@ rule("plugin")
         local product_version = semver.new(configs.product_version or project.version() or configs.version or target:version() or "0.0.0")
         local product_version_string = string.format("%s.%s.%s", product_version:major(), product_version:minor(), product_version:patch())
 
-        local output_files_folder = path.join(target:autogendir(), "rules", "skyrim-commonlib-ae", "plugin")
+        local output_files_folder = path.join(target:autogendir(), "rules", "skyrim-commonlib-se", "plugin")
 
         local version_file = path.join(output_files_folder, "version.rc")
         depend.on_changed(function()
@@ -91,15 +90,6 @@ rule("plugin")
                 file:print("	inline constexpr auto NAME = \"" .. target:name() .. "\"sv;")
                 file:print("}")
                 file:print("")
-                file:print("extern \"C\" __declspec(dllexport) constinit auto SKSEPlugin_Version = []() {")
-                file:print("    SKSE::PluginVersionData v;")
-                file:print("    v.PluginVersion(Plugin::VERSION);")
-                file:print("    v.PluginName(Plugin::NAME);")
-                file:print("    v.UsesAddressLibrary();")
-                file:print("    v.UsesUpdatedStructs();")
-                file:print("    return v;")
-                file:print("}();")
-                file:print("")
                 file:print("extern \"C\" __declspec(dllexport) bool SKSEAPI")
                 file:print("    SKSEPlugin_Query(const SKSE::QueryInterface* a_skse, SKSE::PluginInfo* a_info) {")
                 file:print("    a_info->infoVersion = SKSE::PluginInfo::kVersion;")
@@ -121,7 +111,7 @@ rule("plugin")
     end)
 
     after_build(function(target)
-        local configs = target:extraconf("rules", "@skyrim-commonlib-ae/plugin")
+        local configs = target:extraconf("rules", "@skyrim-commonlib-se/plugin")
 
         local output_folders = config.output_folders or {}
 

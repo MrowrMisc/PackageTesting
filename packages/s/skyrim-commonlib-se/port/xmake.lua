@@ -8,14 +8,14 @@ add_requires("fmt", "rsm-binary-io", "vcpkg::boost-stl-interfaces")
 add_requires("spdlog", { configs = { header_only = false, fmt_external = true } })
 -- TODO: add xbyak when configured (add config option)
 
-target("SkyrimCommonLibAE")
+target("SkyrimCommonLibSE")
     set_kind("static")
 
+    -- add packages
     add_packages("fmt", "spdlog", "rsm-binary-io", "vcpkg::boost-stl-interfaces")
     -- TODO: add xbyak when configured (add config option)
 
     add_defines(
-        "SKYRIM_SUPPORT_AE=1",
         "BOOST_STL_INTERFACES_DISABLE_CONCEPTS",
         "WIN32_LEAN_AND_MEAN", "NOMINMAX", "UNICODE", "_UNICODE"
     )
