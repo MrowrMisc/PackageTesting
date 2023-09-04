@@ -12,7 +12,12 @@ rule("plugin")
         target:set("arch", "x64")
 
         local configs = target:extraconf("rules", "@skyrim-commonlib-ae/plugin")
+
         local version = semver.new(configs.version or target:version() or "0.0.0")
+        local version_string = string.format("%s.%s.%s", version:major(), version:minor(), version:patch())
+
+        local product_version = semver.new(configs.product_version or project.version() or configs.version or target:version() or "0.0.0")
+        local product_version_string = string.format("%s.%s.%s", product_version:major(), product_version:minor(), product_version:patch())
 
         local output_files_folder = path.join(target:autogendir(), "rules", "skyrim-commonlib-ae", "plugin")
 
@@ -23,7 +28,7 @@ rule("plugin")
                 file:print("#include <winres.h>\n")
                 file:print("1 VERSIONINFO")
                 file:print("FILEVERSION %s, %s, %s, 0", version:major(), version:minor(), version:patch())
-                file:print("PRODUCTVERSION %s, %s, %s, 0", version:major(), version:minor(), version:patch())
+                file:print("PRODUCTVERSION %s, %s, %s, 0", product_version:major(), product_version:minor(), product_version:patch())
                 file:print("FILEFLAGSMASK 0x17L")
                 file:print("#ifdef _DEBUG")
                 file:print("    FILEFLAGS 0x1L")
@@ -39,11 +44,11 @@ rule("plugin")
                 file:print("        BLOCK \"040904b0\"")
                 file:print("        BEGIN")
                 file:print("            VALUE \"FileDescription\", \"%s\"", configs.description or "")
-                file:print("            VALUE \"FileVersion\", \"%s.0\"", configs.version or target:version() or "0.0.0")
+                file:print("            VALUE \"FileVersion\", \"%s.0\"", version_string)
                 file:print("            VALUE \"InternalName\", \"%s\"", configs.name or target:name())
                 file:print("            VALUE \"LegalCopyright\", \"%s, %s\"", configs.author or "", configs.license or target:license() or "Unknown License")
                 file:print("            VALUE \"ProductName\", \"%s\"", configs.product_name or project.name() or configs.name or target:name())
-                file:print("            VALUE \"ProductVersion\", \"%s.0\"", configs.product_version or project.version() or configs.version or target:version() or "0.0.0")
+                file:print("            VALUE \"ProductVersion\", \"%s.0\"", product_version_string)
                 file:print("        END")
                 file:print("    END")
                 file:print("    BLOCK \"VarFileInfo\"")
@@ -111,4 +116,29 @@ rule("plugin")
 
         target:add("cxxflags", "/permissive-", "/Zc:alignedNew", "/Zc:__cplusplus", "/Zc:forScope", "/Zc:ternary")
         target:add("cxxflags", "cl::/Zc:externConstexpr", "cl::/Zc:hiddenFriend", "cl::/Zc:preprocessor", "cl::/Zc:referenceBinding")
+    end)
+
+    after_build(function(target)
+        local configs = target:extraconf("rules", "@skyrim-commonlib-ae/plugin")
+
+        if configs.output_folder then
+            local dll = target:targetfile()
+            local pdb = target:targetfile():gsub("%.dll$", ".pdb")
+            local dll_target = path.join(configs.output_folder, path.filename(dll))
+            local pdb_target = path.join(configs.output_folder, path.filename(pdb))
+
+            -- Clean up previous files in the output folder
+            if os.isfile(dll_target) then
+                os.rm(dll_target)
+            end
+            if os.isfile(pdb_target) then
+                os.rm(pdb_target)
+            end
+
+            -- Copy new files to output fulder
+            os.cp(dll, configs.output_folder)
+            if os.isfile(pdb) then
+                os.cp(pdb, configs.output_folder)
+            end
+        end
     end)
