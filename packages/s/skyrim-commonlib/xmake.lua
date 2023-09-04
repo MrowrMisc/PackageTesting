@@ -3,7 +3,8 @@
 -- Original xmake configuration for CommonLibSSE-NG project by Qudix (https://github.com/Qudix)
 -- Modifications were made to the original code
 
-package("skyrim-commonlib-ng")
+-- Default "skyrim-commonlib" ---> NG (it's a complete copy for the rules to work OK)
+package("skyrim-commonlib")
     set_homepage("https://github.com/CharmedBaryon/CommonLibSSE-NG")
     set_description("A reverse engineered library for Skyrim Special Edition.")
     set_license("MIT")
