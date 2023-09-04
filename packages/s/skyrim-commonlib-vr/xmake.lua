@@ -6,7 +6,14 @@ package("skyrim-commonlib-vr")
     add_deps("fmt", "rsm-binary-io", "vcpkg::boost-stl-interfaces")
     add_deps("spdlog", { configs = { header_only = false, fmt_external = true } })
 
-    add_syslinks("version", "user32", "shell32", "ole32", "advapi32")
+    add_configs("xbyak", {description = "Enable trampoline support for Xbyak", default = false, type = "boolean"})
+
+    on_load("windows|x64", function(package)
+        if package:config("xbyak") then
+            package:add("defines", "SKSE_SUPPORT_XBYAK=1")
+            package:add("deps", "xbyak")
+        end
+    end)
 
     on_load("windows|x64", function(package)
         package:add("defines", "SKYRIMVR", "_CRT_SECURE_NO_WARNINGS")
@@ -41,7 +48,10 @@ package("skyrim-commonlib-vr")
         io.writefile(pch_path, content)
 
         os.cp(path.join(package:scriptdir(), "port", "xmake.lua"), "xmake.lua")
-        import("package.tools.xmake").install(package, {})
+
+        import("package.tools.xmake").install(package, {
+            xbyak = package:config("xbyak")
+        })
 
         -- Evil! Let's inject the 'SKSEPluginLoad' macro for compatibility with NG
         local skse_header_path = path.join(package:installdir(), "include/SKSE/SKSE.h")

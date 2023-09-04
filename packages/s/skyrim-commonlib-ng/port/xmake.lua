@@ -4,35 +4,47 @@ set_arch("x64")
 set_warnings("allextra", "error")
 set_optimize("faster")
 
+option("se")
+    set_default(true)
+    set_description("Enable runtime support for Skyrim SE")
+    add_defines("ENABLE_SKYRIM_SE=1")
+option_end()
+
+option("ae")
+    set_default(true)
+    set_description("Enable runtime support for Skyrim AE")
+    add_defines("ENABLE_SKYRIM_AE=1")
+option_end()
+
+option("vr")
+    set_default(true)
+    set_description("Enable runtime support for Skyrim VR")
+    add_defines("ENABLE_SKYRIM_VR=1")
+option_end()
+
 option("xbyak")
     set_default(false)
     set_description("Enable trampoline support for Xbyak")
     add_defines("SKSE_SUPPORT_XBYAK=1")
 option_end()
 
-add_requires("fmt", "rsm-binary-io", "vcpkg::boost-stl-interfaces")
+add_requires("fmt", "rapidcsv")
 add_requires("spdlog", { configs = { header_only = false, fmt_external = true } })
 
 if has_config("xbyak") then
     add_requires("xbyak")
 end
 
-target("SkyrimCommonLibSE")
+target("SkyrimCommonLibNG")
     set_kind("static")
 
-    add_packages("fmt", "spdlog", "rsm-binary-io", "vcpkg::boost-stl-interfaces")
+    add_packages("fmt", "spdlog", "rapidcsv")
 
     if has_config("xbyak") then
         add_packages("xbyak")
     end
 
-    add_options("xbyak")
-
-    add_defines(
-        "BOOST_STL_INTERFACES_DISABLE_CONCEPTS",
-        "WIN32_LEAN_AND_MEAN", "NOMINMAX",
-        "UNICODE", "_UNICODE"
-    )
+    add_options("se", "ae", "vr", "xbyak")
 
     add_syslinks("version", "user32", "shell32", "ole32", "advapi32")
 
@@ -46,6 +58,8 @@ target("SkyrimCommonLibSE")
     )
 
     set_pcxxheader("include/SKSE/Impl/PCH.h")
+
+    add_defines("WIN32_LEAN_AND_MEAN", "NOMINMAX", "UNICODE", "_UNICODE")
 
     -- add flags
     add_cxxflags("/permissive-")

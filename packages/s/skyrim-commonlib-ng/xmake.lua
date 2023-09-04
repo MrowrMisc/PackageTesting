@@ -1,10 +1,55 @@
-package("skyrim-commonlib-ng")
+package("skyrim-commonlib-vr")
     set_homepage("https://github.com/CharmedBaryon/CommonLibSSE-NG")
     set_description("A reverse engineered library for Skyrim Special Edition.")
     set_license("MIT")
 
-    -- From the official xmake-repo
-    add_deps("commonlibsse-ng")
+    add_urls("https://github.com/CharmedBaryon/CommonLibSSE-NG/archive/$(version).zip",
+             "https://github.com/CharmedBaryon/CommonLibSSE-NG.git")
+
+    add_configs("xbyak", {description = "Enable trampoline support for Xbyak", default = false, type = "boolean"})
+    add_configs("skyrim_se", {description = "Enable runtime support for Skyrim SE", default = true, type = "boolean"})
+    add_configs("skyrim_ae", {description = "Enable runtime support for Skyrim AE", default = true, type = "boolean"})
+    add_configs("skyrim_vr", {description = "Enable runtime support for Skyrim VR", default = true, type = "boolean"})
+
+    add_deps("fmt", "rapidcsv")
+    add_deps("spdlog", { configs = { header_only = false, fmt_external = true } })
+
+    on_load("windows|x64", function(package)
+        if package:config("se") then
+            package:add("defines", "ENABLE_SKYRIM_SE=1")
+        end
+        if package:config("ae") then
+            package:add("defines", "ENABLE_SKYRIM_AE=1")
+        end
+        if package:config("vr") then
+            package:add("defines", "ENABLE_SKYRIM_VR=1")
+        end
+        if package:config("xbyak") then
+            package:add("defines", "SKSE_SUPPORT_XBYAK=1")
+            package:add("deps", "xbyak")
+        end
+
+        package:add("defines", "HAS_SKYRIM_MULTI_TARGETING=1")
+    end)
 
     on_install("windows|x64", function(package)
+        os.cp(path.join(package:scriptdir(), "port", "xmake.lua"), "xmake.lua")
+
+        local options = {}
+        options.se = package:config("se")
+        options.ae = package:config("ae")
+        options.vr = package:config("vr")
+        options.xbyak = package:config("xbyak")
+
+        import("package.tools.xmake").install(package, options)
+    end)
+
+    on_test("windows|x64", function(package)
+        assert(package:check_cxxsnippets({test = [[
+            #include <SKSE/SKSE.h>
+
+            SKSEPluginLoad(const SKSE::LoadInterface*) {
+                return true;
+            };
+        ]]}, { configs = { languages = "c++20" } }))
     end)

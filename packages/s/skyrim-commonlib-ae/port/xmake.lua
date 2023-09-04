@@ -4,15 +4,29 @@ set_arch("x64")
 set_warnings("allextra", "error")
 set_optimize("faster")
 
+option("xbyak")
+    set_default(false)
+    set_description("Enable trampoline support for Xbyak")
+    add_defines("SKSE_SUPPORT_XBYAK=1")
+option_end()
+
 add_requires("fmt", "rsm-binary-io", "vcpkg::boost-stl-interfaces")
 add_requires("spdlog", { configs = { header_only = false, fmt_external = true } })
--- TODO: add xbyak when configured (add config option)
+
+if has_config("xbyak") then
+    add_requires("xbyak")
+end
 
 target("SkyrimCommonLibAE")
     set_kind("static")
 
     add_packages("fmt", "spdlog", "rsm-binary-io", "vcpkg::boost-stl-interfaces")
-    -- TODO: add xbyak when configured (add config option)
+
+    if has_config("xbyak") then
+        add_packages("xbyak")
+    end
+
+    add_options("xbyak")
 
     add_defines(
         "SKYRIM_SUPPORT_AE=1",
