@@ -18,6 +18,10 @@ rule("plugin")
 
         local config = target:extraconf("rules", "@skyrim-commonlib-ae/plugin")
 
+        if not config.add_package == false then
+            target:add("packages", "skyrim-commonlib-ae")
+        end
+
         local version = semver.new(config.version or target:version() or "0.0.0")
         local version_string = string.format("%s.%s.%s", version:major(), version:minor(), version:patch())
 
