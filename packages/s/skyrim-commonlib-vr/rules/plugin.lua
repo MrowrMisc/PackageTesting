@@ -156,10 +156,10 @@ rule("plugin")
             end
         end
         
-        local mods_folders = config.mods_folders or {}
+        local mod_folders = config.mod_folders or {}
 
         if config.mods_folder then
-            table.insert(mods_folders, config.mods_folder)
+            table.insert(mod_folders, config.mods_folder)
         end
 
         local mod_name = config.mod_name or config.name or target:name()
@@ -171,7 +171,7 @@ rule("plugin")
             table.insert(mod_files, pdb)
         end
 
-        for _, mods_folder in ipairs(mods_folders) do
+        for _, mods_folder in ipairs(mod_folders) do
             local mod_folder = path.join(mods_folder, mod_name)
 
             for _, mod_file in ipairs(mod_files) do
