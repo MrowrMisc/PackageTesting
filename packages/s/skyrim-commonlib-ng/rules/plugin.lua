@@ -18,15 +18,15 @@ rule("plugin")
             target:add("packages", "skyrim-commonlib-ng")
         end
 
-        if config.ae =~ false then
+        if config.ae ~= false then
             target:add("defines", "ENABLE_SKYRIM_AE=1")
         end
 
-        if config.se =~ false then
+        if config.se ~= false then
             target:add("defines", "ENABLE_SKYRIM_SE=1")
         end
 
-        if config.vr =~ false then
+        if config.vr ~= false then
             target:add("defines", "ENABLE_SKYRIM_VR=1")
         end
 
