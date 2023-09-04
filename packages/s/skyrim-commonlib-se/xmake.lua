@@ -1,3 +1,8 @@
+-- This configuration is based on code from https://github.com/xmake-io/xmake-repo
+-- License: Apache 2.0
+-- Original xmake configuration for CommonLibSSE-NG project by Qudix (https://github.com/Qudix)
+-- Modifications were made to the original code
+
 package("skyrim-commonlib-se")
     set_homepage("https://github.com/powerof3/CommonLibSSE")
     set_description("A reverse engineered library for Skyrim Special Edition.")

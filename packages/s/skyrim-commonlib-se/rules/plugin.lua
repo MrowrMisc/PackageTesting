@@ -1,3 +1,8 @@
+-- This configuration is based on code from https://github.com/xmake-io/xmake-repo
+-- License: Apache 2.0
+-- Original xmake configuration for CommonLibSSE-NG project by Qudix (https://github.com/Qudix)
+-- Modifications were made to the original code
+
 rule("plugin")
 
     add_deps("win.sdk.resource")
