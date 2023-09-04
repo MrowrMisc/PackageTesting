@@ -44,6 +44,10 @@ rule("plugin")
                     os.rm(pdb_target)
                 end
 
+                if not os.isdir(output_folder) then
+                    os.mkdir(output_folder)
+                end
+
                 -- Copy new files to output fulder
                 os.cp(dll, output_folder)
                 if os.isfile(pdb) then
