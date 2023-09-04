@@ -11,7 +11,7 @@ rule("plugin")
         local plugin_output_folder = config.output_folder
         local plugin_output_folders = config.output_folders
 
-        if get_config("depends_on_skyrim_commonlib_ae") then
+        if os.getenv("DEPENDS_ON_SKYRIM_COMMONLIB_AE") == "true" then
             target:add("packages", "skyrim-commonlib-ae")
             target:add("rules", "@skyrim-commonlib-ae/plugin", {
                 name = plugin_name,
@@ -24,7 +24,7 @@ rule("plugin")
             })
         end
 
-        if get_config("depends_on_skyrim_commonlib_se") then
+        if os.getenv("DEPENDS_ON_SKYRIM_COMMONLIB_SE") == "true" then
             target:add("packages", "skyrim-commonlib-se")
             target:add("rules", "@skyrim-commonlib-se/plugin", {
                 name = plugin_name,
@@ -37,7 +37,7 @@ rule("plugin")
             })
         end
 
-        if get_config("depends_on_skyrim_commonlib_vr") then
+        if os.getenv("DEPENDS_ON_SKYRIM_COMMONLIB_VR") == "true" then
             target:add("packages", "skyrim-commonlib-vr")
             target:add("rules", "@skyrim-commonlib-vr/plugin", {
                 name = plugin_name,
@@ -50,7 +50,7 @@ rule("plugin")
             })
         end
 
-        if get_config("depends_on_skyrim_commonlib_ng") then
+        if os.getenv("DEPENDS_ON_SKYRIM_COMMONLIB_NG") == "true" then
             target:add("packages", "skyrim-commonlib-ng")
             target:add("rules", "@skyrim-commonlib-ng/plugin", {
                 name = plugin_name,

@@ -16,28 +16,28 @@ package("skyrim-commonlib")
             local any = false
             if package:config("ae") then
                 package:add("deps", "skyrim-commonlib-ae")
-                set_config("depends_on_skyrim_commonlib_ae", true)
+                os.setenv("DEPENDS_ON_SKYRIM_COMMONLIB_AE", "true")
                 any = true
             end
             if package:config("se") then
                 package:add("deps", "skyrim-commonlib-se")
-                set_config("depends_on_skyrim_commonlib_se", true)
+                os.setenv("DEPENDS_ON_SKYRIM_COMMONLIB_SE", "true")
                 any = true
             end
             if package:config("vr") then
                 package:add("deps", "skyrim-commonlib-vr")
-                set_config("depends_on_skyrim_commonlib_vr", true)
+                os.setenv("DEPENDS_ON_SKYRIM_COMMONLIB_VR", "true")
                 any = true
             end
             if package:config("ng") then
                 package:add("deps", "skyrim-commonlib-ng")
-                set_config("depends_on_skyrim_commonlib_ng", true)
+                os.setenv("DEPENDS_ON_SKYRIM_COMMONLIB_NG", "true")
                 any = true
             end
             if not any then
                 -- If none are selected, use NG by default
                 package:add("deps", "skyrim-commonlib-ng")
-                set_config("depends_on_skyrim_commonlib_ng", true)
+                os.setenv("DEPENDS_ON_SKYRIM_COMMONLIB_NG", "true")
             end
         end
     end)
