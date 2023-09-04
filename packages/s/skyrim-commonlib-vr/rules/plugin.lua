@@ -1,4 +1,5 @@
 rule("plugin")
+
     add_deps("win.sdk.resource")
 
     on_config(function(target)
