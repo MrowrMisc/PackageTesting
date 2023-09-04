@@ -122,9 +122,14 @@ rule("plugin")
     end)
 
     after_build(function(target)
+        print("After build")
         local config = target:extraconf("rules", "@skyrim-commonlib-ae/plugin")
+        print("Config: ")
+        print(config)
 
+        print("Output folders: ")
         local output_folders = config.output_folders or {}
+        print(output_folders)
 
         if config.output_folder then
             table.insert(output_folders, config.output_folder)
@@ -135,8 +140,11 @@ rule("plugin")
         local dll = target:targetfile()
         local pdb = dll:gsub("%.dll$", ".pdb")
 
+        print("A")
         if #output_folders > 0 then
+            print("B")
             for _, output_folder in ipairs(output_folders) do
+                print("C")
                 local dll_target = path.join(output_folder, path.filename(dll))
                 local pdb_target = path.join(output_folder, path.filename(pdb))
 
