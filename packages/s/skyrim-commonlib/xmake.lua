@@ -3,25 +3,11 @@ package("skyrim-commonlib")
     set_description("CommonLib is a reverse engineered library for Skyrim (AE/SE/VR)")
     set_license("MIT")
 
-    option("ae")
-        set_default(false)
-        set_description("Include support for Skyrim Anniversary Edition")
-
-    option("se")
-        set_default(false)
-        set_description("Include support for Skyrim Special Edition")
-
-    option("vr")
-        set_default(false)
-        set_description("Include support for Skyrim VR")
-
-    option("ng")
-        set_default(false)
-        set_description("Include CommonLibSSE-NG (Next Generation)")
-
-    option("all")
-        set_default(false)
-        set_description("Include support for all Skyrim versions (AE/SE/VR) and NG")
+    add_configs("ae", {description = "Include support for Skyrim Anniversary Edition", default = false, type = "boolean"})
+    add_configs("se", {description = "Include support for Skyrim Special Edition", default = false, type = "boolean"})
+    add_configs("vr", {description = "Include support for Skyrim VR", default = false, type = "boolean"})
+    add_configs("ng", {description = "Include CommonLibSSE-NG (Next Generation)", default = false, type = "boolean"})
+    add_configs("all", {description = "Include support for all Skyrim versions (AE/SE/VR) and NG", default = false, type = "boolean"})
 
     on_load(function (package)
         if package:config("all") then
