@@ -1,7 +1,7 @@
 rule("plugin")
 
     on_config(function (target)
-        local config = target:extraconf("rules", "plugin")
+        local config = target:extraconf("rules", "@skyrim-commonlib/plugin")
 
         local plugin_name = config.name or target:name()
         local plugin_version = config.version or "0.0.0"
