@@ -5,3 +5,6 @@ package("skyrim-commonlib-ng")
 
     -- From the official xmake-repo
     add_deps("commonlibsse-ng")
+
+    on_install("windows|x64", function(package)
+    end)

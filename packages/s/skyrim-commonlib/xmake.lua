@@ -41,3 +41,6 @@ package("skyrim-commonlib")
             end
         end
     end)
+
+    on_install("windows|x64", function(package)
+    end)
