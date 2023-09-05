@@ -7,7 +7,7 @@ rule("plugin")
 
     add_deps("win.sdk.resource")
 
-    on_load(function(target)
+    before_build(function(target)
         target:add("packages", "skyrim-commonlib-ae")
     end)
 
