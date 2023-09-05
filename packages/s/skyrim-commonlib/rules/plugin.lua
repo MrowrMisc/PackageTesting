@@ -7,6 +7,10 @@ rule("plugin")
 
     add_deps("win.sdk.resource")
 
+    on_load(function(target)
+        target:add("packages", "skyrim-commonlib")
+    end)
+
     on_config(function(target)
         import("core.base.semver")
         import("core.project.depend")
@@ -18,10 +22,6 @@ rule("plugin")
         target:set("arch", "x64")
 
         local config = target:extraconf("rules", "@skyrim-commonlib/plugin")
-
-        if config.add_package ~= false then
-            target:add("packages", "skyrim-commonlib")
-        end
 
         if config.ae ~= false then
             target:add("defines", "ENABLE_SKYRIM_AE=1")

@@ -7,6 +7,10 @@ rule("plugin")
 
     add_deps("win.sdk.resource")
 
+    on_load(function(target)
+        target:add("packages", "skyrim-commonlib-vr")
+    end)
+
     on_config(function(target)
         import("core.base.semver")
         import("core.project.depend")
@@ -25,10 +29,6 @@ rule("plugin")
         target:add("cxxflags", "cl::/Zc:externConstexpr", "cl::/Zc:hiddenFriend", "cl::/Zc:preprocessor", "cl::/Zc:referenceBinding")
 
         local config = target:extraconf("rules", "@skyrim-commonlib-vr/plugin")
-
-        if config.add_package ~= false then
-            target:add("packages", "skyrim-commonlib-vr")
-        end
 
         local version = semver.new(config.version or target:version() or "0.0.0")
         local version_string = string.format("%s.%s.%s", version:major(), version:minor(), version:patch())
