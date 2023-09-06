@@ -158,14 +158,53 @@ rule("plugin")
             end
         end
         
-        local mod_folders = config.mod_folders or {}
+        -- Split string into a table by a delimiter
+        function split(str, delim)
+            local result = {}
+            for match in (str .. delim):gmatch("(.-)" .. delim) do
+                table.insert(result, match)
+            end
+            return result
+        end
 
-        if config.mods_folder then
-            table.insert(mod_folders, config.mods_folder)
+        -- add unique items to a "set"
+        function addToSet(set, value)
+            set[value] = true
+        end
+
+        local all_folders_set = {}  -- "set" to store unique folder paths
+        local mod_names = {"mod_folder", "mods_folder", "mods_folders", "mod_folders"}
+
+        for _, mod_name in ipairs(mod_names) do
+            local mod_value = config[mod_name]  -- This could be a table or a string
+            if mod_value then
+                if type(mod_value) == "table" then
+                    for _, entry in ipairs(mod_value) do
+                        -- split by semicolons
+                        for _, item in ipairs(split(entry, ";")) do
+                            if item ~= "" then  -- No empty strings
+                                addToSet(all_folders_set, item)
+                            end
+                        end
+                    end
+                elseif type(mod_value) == "string" then
+                    -- split by semicolons
+                    for _, item in ipairs(split(mod_value, ";")) do
+                        if item ~= "" then
+                            addToSet(all_folders_set, item)
+                        end
+                    end
+                end
+            end
+        end
+
+        -- Convert set to table
+        local mod_folders = {}
+        for k in pairs(all_folders_set) do
+            table.insert(mod_folders, k)
         end
 
         local mod_name = config.mod_name or config.name or target:name()
-
         local mod_files = config.mod_files or {}
 
         table.insert(mod_files, dll)
@@ -175,7 +214,6 @@ rule("plugin")
 
         for _, mods_folder in ipairs(mod_folders) do
             local mod_folder = path.join(mods_folder, mod_name)
-
             for _, mod_file in ipairs(mod_files) do
                 if os.isfile(mod_file) then
                     local mod_file_target = path.join(mod_folder, path.filename(mod_file))
